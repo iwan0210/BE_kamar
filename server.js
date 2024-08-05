@@ -2,7 +2,7 @@ require('dotenv').config()
 
 const express = require('express')
 const app = express()
-const port = process.env.POST || 3000
+const port = process.env.PORT || 3000
 
 const ErrorHandler = require('./src/middleware/ErrorHandler')
 const UsersRoute = require('./src/api/users/routes')
