@@ -1,6 +1,6 @@
 require('dotenv').config()
 const pool = require('mysql2/promise')
-const moment = require("moment")
+const moment = require('moment-timezone')
 const NotFoundError = require('../exceptions/NotFoundError')
 
 
@@ -43,7 +43,7 @@ class RoomService {
                     id: row.kamar_id,
                     name: row.kamar_name,
                     type: row.kamar_type,
-                    lastUpdate: moment(row.kamar_update).toISOString(),
+                    lastUpdate: moment.tz(originalDate, 'YYYY-MM-DD HH:mm:ss', 'Asia/Jakarta').toISOString(),
                     detail: []
                 }
             }
