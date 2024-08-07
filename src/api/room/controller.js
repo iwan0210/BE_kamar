@@ -28,7 +28,7 @@ class RoomHandler {
         try {
             this._validator(req.body)
 
-            const { roomId, bedId } = req.params.id
+            const { roomId, bedId } = req.params
 
             const { status } = req.body
 
