@@ -1,5 +1,6 @@
 require('dotenv').config()
 const pool = require('mysql2/promise')
+const moment = require("moment")
 const NotFoundError = require('../exceptions/NotFoundError')
 
 
@@ -42,7 +43,7 @@ class RoomService {
                     id: row.kamar_id,
                     name: row.kamar_name,
                     type: row.kamar_type,
-                    lastUpdate: row.kamar_update,
+                    lastUpdate: moment(row.kamar_update).toISOString(),
                     detail: []
                 }
             }
