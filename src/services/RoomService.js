@@ -43,7 +43,7 @@ class RoomService {
                     id: row.kamar_id,
                     name: row.kamar_name,
                     type: row.kamar_type,
-                    lastUpdate: moment.tz(row.kamar_update, 'YYYY-MM-DD HH:mm:ss', 'Asia/Jakarta').toISOString(),
+                    lastUpdate: moment.tz(row.kamar_update, 'Asia/Jakarta').format(),
                     detail: []
                 }
             }
