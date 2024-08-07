@@ -1,7 +1,8 @@
 class RoomHandler {
-    constructor(service, validator) {
+    constructor(service, validator, firebase) {
         this._service = service
         this._validator = validator
+        this._firebase = firebase
 
         this.getRoom = this.getRoom.bind(this)
         this.editRoom = this.editRoom.bind(this)
@@ -41,6 +42,20 @@ class RoomHandler {
             }
 
             res.status(200).json(response)
+
+            if (status == 0) {
+                const roomName = await this._service.getRoomNameById(roomId)
+
+                const message = {
+                    notification: {
+                      title: 'Kamar Kosong',
+                      body: `Kamar ${roomName} baru saja kosong`
+                    },
+                    topic: 'ruslam'
+                }
+
+                await this._firebase.sendNotification(message)
+            }
         } catch (error) {
             next(error)
         }

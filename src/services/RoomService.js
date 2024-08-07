@@ -61,11 +61,21 @@ class RoomService {
     }
 
     async #updateTime(roomId) {
-        const result  = await this._pool.query("UPDATE kamar set `update` = NOW() WHERE id = ?", [roomId])
+        const result = await this._pool.query("UPDATE kamar set `update` = NOW() WHERE id = ?", [roomId])
 
         if(result[0].affectedRows < 1) {
             throw new NotFoundError("Kamar tidak ditemukan")
         }
+    }
+
+    async getRoomNameById(roomId) {
+        const result = await this._pool.query("SELECT name from kamar WHERE id = ?", [roomId])
+
+        if(result[0].affectedRows < 1) {
+            throw new NotFoundError("Kamar tidak ditemukan")
+        }
+
+        return result[0][0].name
     }
 }
 
