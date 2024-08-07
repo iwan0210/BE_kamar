@@ -17,16 +17,18 @@ class RoomService {
         })
     }
 
-    async editRoom(roomBedId, status) {
+    async editRoom(roomId, roomBedId, status) {
         const result = await this._pool.query("update kamar_detail set status = ? where id = ?", [status.toString(), roomBedId])
 
         if(result[0].affectedRows < 1) {
             throw new NotFoundError("Kamar tidak ditemukan")
         }
+
+        this.#updateTime(roomId)
     }
 
     async getRoom() {
-        const result = await this._pool.query("SELECT k.id AS kamar_id, k.name AS kamar_name, kd.id AS detail_id, kd.name AS detail_name, kd.status AS detail_status FROM kamar k LEFT JOIN kamar_detail kd ON k.id = kd.kamar_id")
+        const result = await this._pool.query("SELECT k.id AS kamar_id, k.name AS kamar_name, k.update as kamar_update, k.type as kamar_type, kd.id AS detail_id, kd.name AS detail_name, kd.status AS detail_status FROM kamar k LEFT JOIN kamar_detail kd ON k.id = kd.kamar_id")
 
         return this.#formatData(result[0])
     }
@@ -39,6 +41,8 @@ class RoomService {
                 data[row.kamar_id] = {
                     id: row.kamar_id,
                     name: row.kamar_name,
+                    type: row.kamar_type,
+                    lastUpdate: row.kamar_update,
                     detail: []
                 }
             }
@@ -53,6 +57,14 @@ class RoomService {
         })
         
         return Object.values(data)
+    }
+
+    async #updateTime(roomId) {
+        const result  = await this._pool.query("UPDATE kamar set update = NOW() WHERE id = ?", [roomId])
+
+        if(result[0].affectedRows < 1) {
+            throw new NotFoundError("Kamar tidak ditemukan")
+        }
     }
 }
 

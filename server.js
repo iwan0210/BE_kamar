@@ -8,8 +8,6 @@ const ErrorHandler = require('./src/middleware/ErrorHandler')
 const UsersRoute = require('./src/api/users/routes')
 const RoomRoute = require('./src/api/room/routes')
 
-
-
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 

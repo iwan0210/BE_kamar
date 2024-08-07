@@ -28,11 +28,11 @@ class RoomHandler {
         try {
             this._validator(req.body)
 
-            const roomBedId = req.params.id
+            const { roomId, bedId } = req.params.id
 
             const { status } = req.body
 
-            await this._service.editRoom(roomBedId, status)
+            await this._service.editRoom(roomId, bedId, status)
 
             const response = {
                 error: false,

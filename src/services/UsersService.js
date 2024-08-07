@@ -19,13 +19,13 @@ class UsersService {
 
 
     async verifyCredential(username, password) {
-        const result = await this._pool.query("select id, user, name, password, edit from user where user = ?", [username])
+        const result = await this._pool.query("select id, user, name, password, edit, type from user where user = ?", [username])
 
         if (result[0].length < 1) {
             throw new AuthenticationError("Kredensial  yang anda berikan salah")
         }
 
-        const { id: userId, user: userName, name: userFullName, edit: userEdit, password: hashedPassword } = result[0][0]
+        const { id: userId, user: userName, name: userFullName, edit: userEdit, type: userType, password: hashedPassword } = result[0][0]
 
         const match = await bcrypt.compare(password, hashedPassword)
 
@@ -33,7 +33,7 @@ class UsersService {
             throw new AuthenticationError("Kredensial  yang anda berikan salah")
         }
 
-        return { userId, userName, userFullName, userEdit }
+        return { userId, userName, userFullName, userEdit, userType }
     }
 }
 

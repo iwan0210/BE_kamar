@@ -19,7 +19,8 @@ class UsersHandler {
                 userId: userCred.userId,
                 userName: userCred.userName,
                 userFullName: userCred.userFullName,
-                userEdit: userCred.userEdit
+                userEdit: userCred.userEdit,
+                userType: userCred.userType
             })
 
             const response = {

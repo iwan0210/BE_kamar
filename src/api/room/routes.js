@@ -8,7 +8,7 @@ const roomService = new RoomService()
 const roomHandler = new RoomHandler(roomService, RoomValidator)
 
 router.get('/rooms', verifyToken, roomHandler.getRoom)
-router.post('/rooms/:id', verifyEditToken, roomHandler.editRoom)
+router.post('/rooms/:roomId/:bedId', verifyEditToken, roomHandler.editRoom)
 
 
 module.exports = router
