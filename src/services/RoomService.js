@@ -60,7 +60,7 @@ class RoomService {
     }
 
     async #updateTime(roomId) {
-        const result  = await this._pool.query("UPDATE kamar set update = NOW() WHERE id = ?", [roomId])
+        const result  = await this._pool.query("UPDATE kamar set `update` = NOW() WHERE id = ?", [roomId])
 
         if(result[0].affectedRows < 1) {
             throw new NotFoundError("Kamar tidak ditemukan")
